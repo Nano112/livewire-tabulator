@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/harrisonbastian/packages/Nano112/tabulator-livewire",
+      "program": "/Users/harrisonbastian/packages/Nano112/tabulator-livewire/build/Debug/outDebug"
+    }
+  ]
+}

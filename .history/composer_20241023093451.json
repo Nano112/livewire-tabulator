@@ -1,0 +1,22 @@
+{
+    "name": "Nano112/livewire-tabulator",
+    "description": "A Livewire component for Tabulator integration",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Nano112\\LivewireTabulator\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.0",
+        "livewire/livewire": "^3.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nano112\\LivewireTabulator\\LivewireTabulatorServiceProvider"
+            ]
+        }
+    }
+}

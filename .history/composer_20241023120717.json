@@ -1,0 +1,21 @@
+{
+    "name": "nano112/livewire-tabulator",
+    "description": "A reusable component to integrate Tabulator.js with Livewire",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Nano112\\LivewireTabulator\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.4|^8.0",
+        "livewire/livewire": "^3.4"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nano112\\LivewireTabulator\\TabulatorServiceProvider"
+            ]
+        }
+    }
+}
