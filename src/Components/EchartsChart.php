@@ -6,18 +6,16 @@ use Livewire\Component;
 
 class EchartsChart extends Component
 {
+    public $chartId;
     public $options = [];
     public $events = [];
     public $callbacks = [];
     public $theme = 'default';
+    public $chartType = 'line'; // New property to specify chart type
 
-    public static function getDefaultOptions($dataPoints = [])
+    public static function getDefaultOptions($dataPoints = [], $chartType = 'line')
     {
-        return [
-            'title' => [
-                'text' => 'Time Series',
-                'left' => 'center',
-            ],
+        $baseOptions = [
             'tooltip' => [
                 'trigger' => 'axis',
                 'axisPointer' => [
@@ -26,13 +24,6 @@ class EchartsChart extends Component
                         'backgroundColor' => '#6a7985'
                     ]
                 ]
-            ],
-            'legend' => [
-                'data' => array_map(function($dataPoint) {
-                    $parts = explode('/', $dataPoint);
-                    return end($parts);
-                }, $dataPoints),
-                'top' => '30px',
             ],
             'grid' => [
                 'left' => '3%',
@@ -59,32 +50,65 @@ class EchartsChart extends Component
                     ]
                 ]
             ],
-            'xAxis' => [
-                'type' => 'category',
-                'boundaryGap' => false
-            ],
-            'yAxis' => [
-                'type' => 'value',
-                'name' => 'Value'
-            ],
-            'dataZoom' => [
-                [
-                    'type' => 'inside',
-                    'start' => 0,
-                    'end' => 100
-                ],
-                [
-                    'type' => 'slider',
-                    'start' => 0,
-                    'end' => 100
-                ]
-            ]
         ];
+
+        // Add chart type specific options
+        switch ($chartType) {
+            case 'scatter':
+                return array_merge($baseOptions, [
+                    'xAxis' => [
+                        'type' => 'value',
+                        'scale' => true
+                    ],
+                    'yAxis' => [
+                        'type' => 'value',
+                        'scale' => true
+                    ],
+                ]);
+            
+            case 'line':
+            default:
+                return array_merge($baseOptions, [
+                    'legend' => [
+                        'data' => array_map(function($dataPoint) {
+                            $parts = explode('/', $dataPoint);
+                            return end($parts);
+                        }, $dataPoints),
+                        'top' => '30px',
+                    ],
+                    'xAxis' => [
+                        'type' => 'category',
+                        'boundaryGap' => false
+                    ],
+                    'yAxis' => [
+                        'type' => 'value',
+                        'name' => 'Value'
+                    ],
+                    'dataZoom' => [
+                        [
+                            'type' => 'inside',
+                            'start' => 0,
+                            'end' => 100
+                        ],
+                        [
+                            'type' => 'slider',
+                            'start' => 0,
+                            'end' => 100
+                        ]
+                    ]
+                ]);
+        }
     }
 
-    public function mount($options = [], $events = [], $callbacks = [], $theme = 'default')
+    public function mount($chartId = null, $options = [], $events = [], $callbacks = [], $theme = 'default', $chartType = 'line')
     {
-        $this->options = array_merge(self::getDefaultOptions(), $options);
+        if (is_null($chartId)) {
+            $this->chartId = 'chart-' . uniqid();
+        } else {
+            $this->chartId = $chartId;
+        }
+        $this->chartType = $chartType;
+        $this->options = array_merge(self::getDefaultOptions([], $chartType), $options);
         $this->events = $events;
         $this->callbacks = $callbacks;
         $this->theme = $theme;
