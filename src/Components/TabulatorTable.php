@@ -31,4 +31,20 @@ class TabulatorTable extends Component
     {
         $this->data = $newData;
     }
+
+    public function placeholder()
+    {
+        return <<<'HTML'
+        <div>
+            <!-- Preload Tabulator assets -->
+            <link href="{{ config('tabulator.cdn.css', 'https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator.min.css') }}" rel="stylesheet">
+            <script src="{{ config('tabulator.cdn.js', 'https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js') }}"></script>
+            
+            <!-- Loading spinner -->
+            <div class="flex items-center justify-center p-4">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+            </div>
+        </div>
+        HTML;
+    }
 }
